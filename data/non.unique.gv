@@ -1,5 +1,0 @@
-digraph G {
-	style=bold;
-	A -> B -> C -> D;
-	A -> B -> C -> D;
-}

@@ -1,36 +1,63 @@
 #!/usr/bin/env perl
 
+use feature qw/say unicode_strings/;
+use open qw(:std :utf8);
 use strict;
 use warnings;
+use warnings qw(FATAL utf8);
 
-use Date::Format; # For time2str.
+use Getopt::Long;
 
-use GraphViz2::Marpa::PathUtils;
+use GraphViz2::Marpa::PathUtils::Utils;
 
-use Text::Xslate 'mark_raw';
+use Pod::Usage;
 
 # -----------------------------------------------
 
-my($input_file) = shift || die "Usage: $0 input_file";
-my($templater)  = Text::Xslate -> new
-(
-  input_layer => '',
-  path        => 'html',
-);
-my($count) = 0;
-my($index) = $templater -> render
-(
-	'fixed.length.paths.tx',
-	{
-		date_stamp => time2str('%Y-%m-%d %T', time),
-		input_file => $input_file,
-		version    => $GraphViz2::Marpa::PathUtils::VERSION,
-	}
-);
-my($file_name) = File::Spec -> catfile('html', 'fixed.length.paths.html');
+my($option_parser) = Getopt::Long::Parser -> new();
 
-open(OUT, '>', $file_name);
-print OUT $index;
-close OUT;
+my(%option);
 
-print "Wrote: $file_name. \n";
+if ($option_parser -> getoptions
+(
+	\%option,
+	'help',
+) )
+{
+	pod2usage(1) if ($option{'help'});
+
+	exit GraphViz2::Marpa::PathUtils::Utils -> new(%option) -> generate_demo;
+}
+else
+{
+	pod2usage(2);
+}
+
+__END__
+
+=pod
+
+=head1 NAME
+
+generate.demo.pl - Generate GraphViz2::Marpa::PathUtils' html/index.html.
+
+=head1 SYNOPSIS
+
+generate.demo.pl [options]
+
+	Options:
+	-help
+
+Exit value: 0 for success, 1 for failure. Die upon error.
+
+=head1 OPTIONS
+
+=over 4
+
+=item o -help
+
+Print help and exit.
+
+=back
+
+=cut
