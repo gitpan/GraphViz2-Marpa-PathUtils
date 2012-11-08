@@ -43,7 +43,7 @@ fieldhash my %start_node       => 'start_node';
 fieldhash my %tree_dot_file    => 'tree_dot_file';
 fieldhash my %tree_image_file  => 'tree_image_file';
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 
 # -----------------------------------------------
 # For each node, find all the children of the root
@@ -957,6 +957,8 @@ Currently, the only feature available is to find all paths of a given length sta
 
 Sample output: L<http://savage.net.au/Perl-modules/html/graphviz2.pathutils/index.html>.
 
+Command line options and object attributes: L<http://savage.net.au/Perl-modules/html/graphviz2.pathutils/code.attributes.html>.
+
 =head1 Scripts shipped with this distro
 
 All scripts are in the scripts/ directory. This means they do I<not> get installed along with the package.
@@ -964,6 +966,10 @@ All scripts are in the scripts/ directory. This means they do I<not> get install
 Data files are in data/, while html and svg files are in html/.
 
 =over 4
+
+=item o code.attributes2html.pl
+
+Generate both data/code.attributes.csv and data/code.attributes.html.
 
 =item o copy.config.pl
 
@@ -978,10 +984,6 @@ This runs the L</find_clusters()> method in GraphViz2::Marpa::PathUtils.
 
 This runs find.clusters.pl with hard-coded parameters, and is what I use for testing new code.
 
-Then it runs generate.demo.pl.
-
-Lastly it copies the output to my web server's dir, $DR/Perl-modules/html/graphviz2.pathutils/.
-
 =item o find.fixed.length.paths.pl
 
 This runs the L</find_fixed_length_paths()> method in GraphViz2::Marpa::PathUtils.
@@ -992,10 +994,6 @@ Try shell> perl find.fixed.length.paths.pl -h
 
 This runs find.fixed.length.paths.pl with hard-coded parameters, and is what I use for testing new code.
 
-Then it runs generate.demo.pl.
-
-Lastly it copies the output to my web server's doc dir, $DR/Perl-modules/html/graphviz2.pathutils/.
-
 =item o generate.demo.pl
 
 This uses the L<Text::Xslate> template file htdocs/assets/templates/graphviz2/marpa/pathutils/pathutils.tx
@@ -1003,7 +1001,9 @@ to generate html/index.html.
 
 =item o generate.demo.sh
 
-Runs generate.demo.pl and then copies html/*.html and html/*.svg to my web server's dir, $DR/Perl-modules/html/graphviz2.pathutils/.
+Runs generate.demo.pl and code.attributes2html.pl.
+
+Then copies html/*.html and html/*.svg to my web server's dir, $DR/Perl-modules/html/graphviz2.pathutils/.
 
 =item o pod2html.sh
 
@@ -1350,6 +1350,10 @@ The type of image comes from the I<format> parameter to new().
 
 =head1 FAQ
 
+=head2 What is the homepage of Marpa?
+
+L<http://jeffreykegler.github.com/Marpa-web-site/>.
+
 =head2 How are clusters named?
 
 The names of the nodes in each cluster are sorted, and the first is arbitrarily chosen as the name of the cluster.
@@ -1468,12 +1472,6 @@ The book is now downloadable as a PDF from L<http://www.math.upenn.edu/~wilf/web
 =over 4
 
 =item o High priority - Handle ports
-
-=item o High priority - Handle edge attributes
-
-=item o Low priority - Handle multiple class definitions which change nodes' shapes
-
-See the L<FAQ/Sometimes the cluster has the wrong shape for a node> above for sample code.
 
 =item o Low priority - Perhaps implement logic to find paths which end on a given node
 
