@@ -30,6 +30,7 @@ WriteMakefile
 	},
 	DISTNAME  => 'GraphViz2-Marpa-PathUtils',
 	NAME      => 'GraphViz2::Marpa::PathUtils',
+	LICENSE   => 'artistic_2',
 # Next line runs copy.config.pl when user runs 'make'.
 # Warning: '...' => 0 is OK but => '' or undef are ignored.
 	PL_FILES  => {'scripts/copy.config.pl' => 'Copying...'},
@@ -58,8 +59,8 @@ WriteMakefile
 		Pod::Usage       => 1.36,
 		Set::Tiny        => 0.01,
 		strict           => 0,
-		Test::More       => 0.98,
-		Test::Pod        => 1.44,
+		Test::More     => 0.98,
+#		Test::Pod        => 1.45, # Make it optional. See t/pod.t
 		Text::Xslate     => 1.4001,
 		warnings         => 0,
 	},

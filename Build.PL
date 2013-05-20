@@ -22,13 +22,13 @@ EOF
 $class -> new
 (
 	module_name    => 'GraphViz2::Marpa::PathUtils',
-	license        => 'artistic',
+	license        => 'artistic_2',
 	dist_abstract  => 'Provide various analyses of Graphviz dot files',
 	dist_author    => 'Ron Savage <ron@savage.net.au>',
 	build_requires =>
 	{
-		Test::More => 0.98,
-		Test::Pod  => 1.44,
+		Test::More=> 0.98,
+#		Test::Pod  => 1.45, # Make it optional. See t/pod.t
 	},
 	configure_requires =>
 	{
