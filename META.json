@@ -4,7 +4,7 @@
       "Ron Savage <ron@savage.net.au>"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "Module::Build version 0.4003, CPAN::Meta::Converter version 2.120921",
+   "generated_by" : "Module::Build version 0.4005, CPAN::Meta::Converter version 2.120921",
    "license" : [
       "artistic_2"
    ],
@@ -27,14 +27,12 @@
       "runtime" : {
          "requires" : {
             "Capture::Tiny" : "0.1",
-            "Config" : "0",
             "Config::Tiny" : "2.14",
             "Date::Format" : "2.24",
             "Date::Simple" : "3.03",
             "File::Copy" : "2.21",
             "File::HomeDir" : "0.99",
             "File::Slurp" : "9999.19",
-            "File::Spec" : "3.33",
             "File::Which" : "1.09",
             "Getopt::Long" : "2.38",
             "GraphViz2" : "2.05",
@@ -56,15 +54,15 @@
    "provides" : {
       "GraphViz2::Marpa::PathUtils" : {
          "file" : "lib/GraphViz2/Marpa/PathUtils.pm",
-         "version" : "1.03"
+         "version" : "1.04"
       },
       "GraphViz2::Marpa::PathUtils::Config" : {
          "file" : "lib/GraphViz2/Marpa/PathUtils/Config.pm",
-         "version" : "1.03"
+         "version" : "1.04"
       },
       "GraphViz2::Marpa::PathUtils::Utils" : {
          "file" : "lib/GraphViz2/Marpa/PathUtils/Utils.pm",
-         "version" : "1.03"
+         "version" : "1.04"
       }
    },
    "release_status" : "stable",
@@ -73,5 +71,5 @@
          "http://www.perlfoundation.org/artistic_license_2_0"
       ]
    },
-   "version" : "1.03"
+   "version" : "1.04"
 }
