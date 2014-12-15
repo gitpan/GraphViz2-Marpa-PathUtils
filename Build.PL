@@ -1,3 +1,6 @@
+use strict;
+use warnings;
+
 use Config;
 
 use File::Spec;
@@ -51,17 +54,7 @@ sub is_perl_recent
 is_dot_installed();
 is_perl_recent();
 
-my $class = Module::Build->subclass(code => <<'EOF');
-
-sub ACTION_build
-{
-	my $self = shift;
-	$self->SUPER::ACTION_build(@_);
-	$self->run_perl_script('scripts/copy.config.pl');
-}
-EOF
-
-$class -> new
+Module::Build -> new
 (
 	module_name    => 'GraphViz2::Marpa::PathUtils',
 	license        => 'artistic_2',
@@ -69,36 +62,44 @@ $class -> new
 	dist_author    => 'Ron Savage <ron@savage.net.au>',
 	build_requires =>
 	{
-		Test::More=> 0.98,
-#		Test::Pod  => 1.45, # Make it optional. See t/pod.t
+		'Test::More' => 0.98,
+#		'Test::Pod'  => 1.45, # Make it optional. See t/pod.t
 	},
 	configure_requires =>
 	{
-		Module::Build => 0.3800,
+		'Module::Build' => 0.3800,
+	},
+	meta_merge =>
+	{
+		resources =>
+		{
+			repository => 'https://github.com/ronsavage/GraphViz2-Marpa-PathUtils',
+		},
 	},
 	requires =>
 	{
-		Capture::Tiny    => 0.10,
-		Config::Tiny     => 2.14,
-		Date::Format     => 2.24,
-		Date::Simple     => 3.03,
-		feature          => 0,
-		File::Copy       => 2.21,
-		File::HomeDir    => 0.99,
-		File::Slurp      => 9999.19,
-		File::Which      => 1.09,
-		Getopt::Long     => 2.38,
-		GraphViz2        => 2.05,
-		GraphViz2::Marpa => 1.06,
-		Hash::FieldHash  => 0.10,
-		IPC::Run3        => 0.045,
-		open             => 0,
-		parent           => 0.225,
-		Path::Class      => 0.23,
-		Pod::Usage       => 1.36,
-		Set::Tiny        => 0.01,
-		strict           => 0,
-		Text::Xslate     => 1.4001,
-		warnings         => 0,
+		'Capture::Tiny'    => 0.27,
+		'Config'           => 0,
+		'Config::Tiny'     => 2.20,
+		'Date::Simple'     => 3.03,
+		'File::Basename'   => 2.84,
+		'File::Copy'       => 2.21,
+		'File::HomeDir'    => 0.99,
+		'File::Spec'       => 0,
+		'File::Temp'       => 0,
+		'Getopt::Long'     => 2.38,
+		'GraphViz2::Marpa' => 2.03,
+		'GraphViz2::Marpa::Renderer::Graphviz' => 2.03,
+		'Moo'              => 1.006001,
+		'open'             => 0,
+		'parent'           => 0.225,
+		'Path::Tiny'       => 0.061,
+		'Pod::Usage'       => 1.36,
+		'Set::Tiny'        => 0.02,
+		'Sort::Key'        => 1.33,
+		'strict'           => 0,
+		'Text::Xslate'     => '3.3.3',
+		'Types::Standard'  => 1.000005,
+		'warnings'         => 0,
 	},
 ) -> create_build_script();

@@ -1,3 +1,6 @@
+use strict;
+use warnings;
+
 use Config;
 
 use ExtUtils::MakeMaker;
@@ -54,7 +57,7 @@ is_perl_recent();
 # See lib/ExtUtils/MakeMaker.pm for details of how to influence
 # the contents of the Makefile that is written.
 
-WriteMakefile
+my(%params) =
 (
 	($] ge '5.005') ?
 	(
@@ -73,36 +76,64 @@ WriteMakefile
 	DISTNAME  => 'GraphViz2-Marpa-PathUtils',
 	NAME      => 'GraphViz2::Marpa::PathUtils',
 	LICENSE   => 'artistic_2',
-# Next line runs copy.config.pl when user runs 'make'.
-# Warning: '...' => 0 is OK but => '' or undef are ignored.
-	PL_FILES  => {'scripts/copy.config.pl' => 'Copying...'},
+	PL_FILES  => {},
 	PL_FILES  => {},
 	PREREQ_PM =>
 	{
-		Capture::Tiny    => 0.10,
-		Config::Tiny     => 2.14,
-		Date::Format     => 2.24,
-		Date::Simple     => 3.03,
-		feature          => 0,
-		File::Copy       => 2.21,
-		File::HomeDir    => 0.99,
-		File::Slurp      => 9999.19,
-		File::Which      => 1.09,
-		Getopt::Long     => 2.38,
-		GraphViz2        => 2.05,
-		GraphViz2::Marpa => 1.06,
-		Hash::FieldHash  => 0.10,
-		IPC::Run3        => 0.045,
-		open             => 0,
-		parent           => 0.225,
-		Path::Class      => 0.23,
-		Pod::Usage       => 1.36,
-		Set::Tiny        => 0.01,
-		strict           => 0,
-		Test::More     => 0.98,
-#		Test::Pod        => 1.45, # Make it optional. See t/pod.t
-		Text::Xslate     => 1.4001,
-		warnings         => 0,
+		'Capture::Tiny'    => 0.27,
+		'Config'           => 0,
+		'Config::Tiny'     => 2.20,
+		'Date::Simple'     => 3.03,
+		'File::Basename'   => 2.84,
+		'File::Copy'       => 2.21,
+		'File::HomeDir'    => 0.99,
+		'File::Spec'       => 0,
+		'File::Temp'       => 0,
+		'Getopt::Long'     => 2.38,
+		'GraphViz2::Marpa' => 2.03,
+		'GraphViz2::Marpa::Renderer::Graphviz' => 2.03,
+		'Moo'              => 1.006001,
+		'open'             => 0,
+		'parent'           => 0.225,
+		'Path::Tiny'       => 0.061,
+		'Pod::Usage'       => 1.36,
+		'Set::Tiny'        => 0.02,
+		'Sort::Key'        => 1.33,
+		'strict'           => 0,
+		'Test::More'       => 0.98,
+#		'Test::Pod'        => 1.45, # Make it optional. See t/pod.t
+		'Text::Xslate'     => '3.3.3',
+		'Types::Standard'  => 1.000005,
+		'warnings'         => 0,
 	},
 	VERSION_FROM => 'lib/GraphViz2/Marpa/PathUtils.pm',
 );
+
+if ( ($ExtUtils::MakeMaker::VERSION =~ /^\d\.\d\d$/) && ($ExtUtils::MakeMaker::VERSION > 6.30) )
+{
+	$params{LICENSE} = 'artistic_2';
+}
+
+if ($ExtUtils::MakeMaker::VERSION ge '6.46')
+{
+	$params{META_MERGE} =
+	{
+		'meta-spec' =>
+		{
+			version => 2,
+		},
+		resources   =>
+		{
+			bugtracker => 'https://rt.cpan.org/Public/Dist/Display.html?Name=GraphViz2-Marpa-PathUtils',
+			license    => 'http://opensource.org/licenses/Artistic-2.0',
+			repository =>
+			{
+				type => 'git',
+				url  => 'https://github.com/ronsavage/GraphViz2-Marpa-PathUtils.git',
+				web  => 'https://github.com/ronsavage/GraphViz2-Marpa-PathUtils',
+			},
+		},
+	};
+}
+
+WriteMakefile(%params);

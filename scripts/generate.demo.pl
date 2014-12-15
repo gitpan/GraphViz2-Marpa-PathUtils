@@ -1,14 +1,13 @@
 #!/usr/bin/env perl
 
-use feature qw/say unicode_strings/;
-use open qw(:std :utf8);
 use strict;
 use warnings;
-use warnings qw(FATAL utf8);
+use warnings qw(FATAL utf8); # Fatalize encoding glitches.
+use open     qw(:std :utf8); # Undeclared streams in UTF-8.
 
 use Getopt::Long;
 
-use GraphViz2::Marpa::PathUtils::Utils;
+use GraphViz2::Marpa::PathUtils::Demo;
 
 use Pod::Usage;
 
@@ -26,7 +25,7 @@ if ($option_parser -> getoptions
 {
 	pod2usage(1) if ($option{'help'});
 
-	exit GraphViz2::Marpa::PathUtils::Utils -> new(%option) -> generate_demo;
+	exit GraphViz2::Marpa::PathUtils::Demo -> new(%option) -> generate_demo;
 }
 else
 {

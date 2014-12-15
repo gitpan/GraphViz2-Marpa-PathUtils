@@ -2,6 +2,8 @@
 
 use strict;
 use warnings;
+use warnings qw(FATAL utf8); # Fatalize encoding glitches.
+use open     qw(:std :utf8); # Undeclared streams in UTF-8.
 
 use Getopt::Long;
 
@@ -20,21 +22,14 @@ if ($option_parser -> getoptions
 	\%option,
 	'allow_cycles=i',
 	'description=s',
-	'format=s',
 	'help',
 	'input_file=s',
-	'lexed_file=s',
 	'maxlevel=s',
 	'minlevel=s',
 	'output_file=s',
-	'parsed_file=s',
 	'path_length=i',
-	'report_forest=i',
-	'report_items=i',
 	'report_paths=i',
 	'start_node=s',
-	'tree_dot_file=s',
-	'tree_image_file=s',
 ) )
 {
 	pod2usage(1) if ($option{'help'});
@@ -59,23 +54,16 @@ find.fixed.length.paths.pl - Run GraphViz2::Marpa::PathUtils.
 find.fixed.length.paths.pl [options]
 
 	Options:
-	-allow_cycles $integer
+	-allow_cycles $Boolean
 	-description graphDescription
-	-format imageFormatType
 	-help
 	-input_file aDotInputFileName
-	-lexed_file aLexedOutputFileName
 	-maxlevel logOption1
 	-minlevel logOption2
 	-output_file aDOTInputFileName
-	-parsed_file aParsedOutputFileName
 	-path_length $integer
-	-report_forest $Boolean
-	-report_items $Boolean
 	-report_paths $Boolean
 	-start_node aNodeName
-	-tree_dot_file aDOTInputFileName
-	-tree_image_file aDOTOutputFileName
 
 Exit value: 0 for success, 1 for failure. Die upon error.
 
@@ -83,11 +71,11 @@ Exit value: 0 for success, 1 for failure. Die upon error.
 
 =over 4
 
-=item o -allow_cycles $integer
+=item o -allow_cycles $Boolean
 
 Specify whether or not cycles are allowed in the paths found.
 
-Values for $integer:
+Values for $Boolean:
 
 =over 4
 
@@ -113,14 +101,6 @@ The -description option takes precedence over the -input_file option.
 
 Default: ''.
 
-=item o -format anImageFormatType
-
-Specify the type of image output by DOT to the tree_image_file, if any.
-
-Default: 'svg'.
-
-=item o -help
-
 Print help and exit.
 
 =item o -input_file aDotInputFileName
@@ -134,16 +114,6 @@ The -description option takes precedence over the -input_file option.
 Default: ''.
 
 See the distro for data/*.gv.
-
-=item o -lexed_file aLexedOutputFileName
-
-Specify the name of a CSV file of parsed tokens to write.
-
-See the distro for data/*.lex.
-
-Default: ''.
-
-The default means the file is not written.
 
 =item o -maxlevel logOption1
 
@@ -163,11 +133,9 @@ Default: 'error'.
 
 No lower levels are used.
 
-=item o -parsed_file aParsedOutputFileName
+=item o -output_file aDOTInputFileName
 
-Specify the name of a CSV file of parsed tokens to write.
-
-See the distro for data/*.parse.
+Specify the name of a DOT file to write for the paths found.
 
 Default: ''.
 
@@ -179,21 +147,9 @@ The path length which all detected trees must have.
 
 Defailt: 0.
 
-=item o -report_forest $Boolean
-
-Log the forest parsed from the input file.
-
-Default: 0.
-
-=item o -report_items $Boolean
-
-Log the items recognized by the parser.
-
-Default: 0.
-
 =item o -report_paths $Boolean
 
-Log the paths detected.
+Specify whether or not to log fixe length paths found.
 
 Default: 0.
 
@@ -202,24 +158,6 @@ Default: 0.
 The name of the node which all trees must start from.
 
 Default: ''.
-
-=item o -tree_dot_file aDOTInputFileName
-
-Specify the name of a DOT file to write for the trees found.
-
-Default: ''.
-
-The default means the file is not written.
-
-=item o -tree_image_file aDOTOutputFileName
-
-Specify the name of an SVG file to write for the trees found.
-
-If this file is created, the value of the format option (which defaults to 'svg') is passed to dot.
-
-Default: ''.
-
-The default means the file is not written.
 
 =back
 

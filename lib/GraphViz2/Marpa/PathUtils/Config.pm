@@ -2,47 +2,52 @@ package GraphViz2::Marpa::PathUtils::Config;
 
 use strict;
 use warnings;
+use warnings qw(FATAL utf8); # Fatalize encoding glitches.
+use open     qw(:std :utf8); # Undeclared streams in UTF-8.
 
 use Config::Tiny;
 
 use File::HomeDir;
+use File::Spec;
 
-use Hash::FieldHash ':all';
+use Moo;
 
-use Path::Class;
+has config =>
+(
+	default  => sub{return {} },
+	is       => 'rw',
+#	isa      => 'HashRef',
+	required => 0,
+);
 
-fieldhash my %config           => 'config';
-fieldhash my %config_file_path => 'config_file_path';
-fieldhash my %section          => 'section';
+has config_file_path =>
+(
+	default  => sub{return ''},
+	is       => 'rw',
+#	isa      => 'Str',
+	required => 0,
+);
 
-our $VERSION = '1.04';
+has section =>
+(
+	default  => sub{return ''},
+	is       => 'rw',
+#	isa      => 'Str',
+	required => 0,
+);
+
+our $VERSION = '2.00';
 
 # -----------------------------------------------
 
-sub _init
+sub BUILD
 {
-	my($self, $arg) = @_;
-
-	return from_hash($self, $arg);
-
-} # End of _init.
-
-# -----------------------------------------------
-
-sub new
-{
-	my($class, %arg) = @_;
-    my($self)        = bless {}, $class;
-
-	$self -> _init(\%arg);
-
-	my($path) = Path::Class::file(File::HomeDir -> my_dist_config('GraphViz2-Marpa-PathUtils'), '.htgraphviz2.marpa.pathutils.conf');
+	my($self) = @_;
+	my($path) = File::Spec -> catfile(File::HomeDir -> my_dist_config('GraphViz2-Marpa-PathUtils'), '.htgraphviz2.marpa.pathutils.conf');
 
 	$self -> read($path);
 
-    return $self;
-
-} # End of new.
+} # End of BUILD.
 
 # -----------------------------------------------
 
@@ -99,34 +104,17 @@ See L<GraphViz2::Marpa::PathUtils>.
 
 =head1 Description
 
+This module is only for the use of the author.
+
 L<GraphViz2::Marpa::PathUtils> provides various analyses of Graphviz dot files.
 
 =head1 Methods
-
-=head2 _init()
-
-For use by subclasses.
-
-Sets default values for object attributes.
-
-=head2 new()
-
-For use by subclasses.
 
 =head2 read()
 
 read() is called by new(). It does the actual reading of the config file.
 
 If the file can't be read, die is called.
-
-The path to the config file is determined by:
-
-	Path::Class::file(File::HomeDir -> my_dist_config('GraphViz2-Marpa-PathUtils'), '.htgraphviz2.marpa.pathutils.conf');
-
-During installation, you should have run scripts/copy.config.pl, which uses the same code, to move the config file
-from the config/ directory in the disto into an OS-dependent directory.
-
-The run-time code uses this module to look in the same directory as used by scripts/copy.config.pl.
 
 =head1 Support
 
